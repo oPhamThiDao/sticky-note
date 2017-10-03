@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    docker:
+       - image: circleci/ruby:2.4.1-node-browsers
+
+    working_directory: ~/sticky-note
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install bundler
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Database setup
+      - run:
+          name: pre create database
+          command: mv config/database.yml.ci config/database.yml
+      - run: bundle exec rake db:migrate
+      - run: bundle exec rake db:seed
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            rubocop app
+            rubocop spec
+            bundle exec rspec spec
+
+      # collect reports
