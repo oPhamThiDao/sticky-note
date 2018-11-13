@@ -55,9 +55,10 @@ export default class Sticky extends Component {
   }
 
   render() {
+    let someValidPath = null
     return (
       <div>
-        <button type="button" className="btn button" id="add_new_note" onClick={this.handleClick.bind(this)}>Add New Note</button>
+        <a href={someValidPath} className="btn button" id="add_new_note" onClick={this.handleClick.bind(this)}>Add New Note</a>
         <Draggable
           data={this.state.data}
           handleRemove={this.handleRemove.bind(this)}
