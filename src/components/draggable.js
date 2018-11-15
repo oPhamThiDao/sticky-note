@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import "jquery-ui/ui/widgets/draggable.js"
 
 export default class Draggable extends Component {
   constructor(props) {
@@ -12,6 +13,20 @@ export default class Draggable extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ data: nextProps.data })
+  }
+
+  componentDidMount() {
+    this.$node = $(this.refs.draggable.children)
+    this.$node.draggable(
+      { stack: ".note" }
+    )
+  }
+
+  componentDidUpdate() {
+    this.$node = $(this.refs.draggable.children)
+    this.$node.draggable(
+      { stack: ".note" }
+    )
   }
 
   renderNotes(v,i) {
@@ -29,7 +44,7 @@ export default class Draggable extends Component {
 
   render() {
     return (
-      <div id="board" style={{height: this.state.height + 'px'}} >
+      <div id="board" ref="draggable" style={{height: this.state.height + 'px'}} >
         {this.state.data.map((v, i) => this.renderNotes(v, i))}
       </div>
     );
