@@ -8,9 +8,9 @@ export default class Sticky extends Component {
       noteZindex: 1,
       numberOfNote: 2,
       data: [
-              {id: 1, zindex: 1, color: "#FFFD75", title: "Note1", content: "description"},
-              {id: 2, zindex: 2, color: "#FAAACA", title: "Note2", content: "Pink background"},
-              {id: 3, zindex: 3, color: "#69F098", title: "Note3", content: "description"}
+              {id: 1, zindex: 1, color: "#FFFD75", title: "Note1", content: "description", top: 40, left: 20 },
+              {id: 2, zindex: 2, color: "#FAAACA", title: "Note2", content: "Pink background", top: 50, left: 30 },
+              {id: 3, zindex: 3, color: "#69F098", title: "Note3", content: "description", top: 60, left: 40 }
             ]
     }
   }
@@ -26,7 +26,9 @@ export default class Sticky extends Component {
                 zindex: ++maxZindex,
                 color: backgroundColor[Math.floor((Math.random()*backgroundColor.length))],
                 title: "Note" + +maxId,
-                content: ""
+                content: "",
+                top: 40 + this.state.data.length*10,
+                left: 20 + this.state.data.length*10
               }
 
     let data = [...this.state.data];
@@ -54,6 +56,21 @@ export default class Sticky extends Component {
     this.setState({ data })
   }
 
+  handleDragOver(event, ui) {
+    let data = [...this.state.data]
+
+    data.map(obj => {
+      if (obj.id === parseInt(event.target.id)) {
+        obj["top"] = ui.offset.top
+        obj["left"] = ui.offset.left
+        obj["zindex"] = event.target.style.zIndex
+      }
+      return obj
+    })
+
+    this.setState({ data })
+  }
+
   render() {
     let someValidPath = null
     return (
@@ -62,7 +79,8 @@ export default class Sticky extends Component {
         <Draggable
           data={this.state.data}
           handleRemove={this.handleRemove.bind(this)}
-          handleChange={this.handleChange.bind(this)} />
+          handleChange={this.handleChange.bind(this)}
+          handleDragOver={this.handleDragOver.bind(this)} />
       </div>
     );
   }
