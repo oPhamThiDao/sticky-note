@@ -18,21 +18,30 @@ export default class Draggable extends Component {
   componentDidMount() {
     this.$node = $(this.refs.draggable.children)
     this.$node.draggable(
-      { stack: ".note" }
+      {
+        stack: ".note",
+        stop: this.props.handleDragOver.bind(this)
+      }
     )
   }
 
   componentDidUpdate() {
     this.$node = $(this.refs.draggable.children)
     this.$node.draggable(
-      { stack: ".note" }
+      {
+        stack: ".note",
+        stop: this.props.handleDragOver.bind(this)
+      }
     )
   }
 
   renderNotes(v,i) {
     let someValidPath = null
     return (
-      <div className="note" id={v.id} key={i} style={{background: v.color, zIndex: v.zindex}}>
+      <div
+        className="note" id={v.id} key={i}
+        style={{background: v.color, zIndex: v.zindex, top: v.top, left: v.left, position: "absolute"}}>
+
         <a href={someValidPath} className="button remove" onClick={this.props.handleRemove.bind(this, i)}>X</a>
         <div className="note_cnt">
           <textarea className="title" placeholder="Enter note title" name="title" value={v.title} onChange={this.props.handleChange.bind(this, v.id)}></textarea>
