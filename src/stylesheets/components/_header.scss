@@ -117,28 +117,54 @@ a:focus {
 		transition: transform .150s;
 	}
 
-	textarea {
-		background-color: transparent;
-		border: none;
-		resize: vertical;
-		font-family: "Gloria Hallelujah", cursive;
-		width: 100%;
-		padding: 5px;
-		&:focus {
-			outline: none;
-			border: none;
-			box-shadow: 0 0 5px 1px rgba(0,0,0,.2) inset;
-		}
-		&.title {
-			font-size: 24px;
-			line-height: 1.2;
-			color: #000000;
-			height: 64px;
-			margin-top: 20px;
-		}
-		&.cnt {
-			min-height: 200px;
-		}
+  .background-color {
+    padding: 6px 6px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+
+    &.green {
+      background-color: #69F098;
+    }
+
+    &.pink {
+      background-color: #FAAACA;
+    }
+
+    &.yellow {
+      background-color: #FFFD75;
+    }
+
+    &:hover {
+      margin-top: -8px;
+      padding: 10px;
+      border: 1px solid #333333;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), inset 0 -1px 2px -1px rgba(0, 0, 0, 0.5), inset 0 1px 2px 1px rgba(255, 255, 255, 0.3);
+    }
+	}
+
+  textarea {
+    background-color: transparent;
+    border: none;
+    resize: vertical;
+    font-family: "Gloria Hallelujah", cursive;
+    width: 100%;
+    padding: 5px;
+    &:focus {
+      outline: none;
+      border: none;
+      box-shadow: 0 0 5px 1px rgba(0,0,0,.2) inset;
+    }
+    &.title {
+      font-size: 24px;
+      line-height: 1.2;
+      color: #000000;
+      height: 64px;
+    }
+    &.cnt {
+      min-height: 200px;
+    }
 	}
 }
 
@@ -146,10 +172,8 @@ a:focus {
 .button {
 	font: bold 16px Helvetica, Arial, sans-serif;
 	color: #FFFFFF;
-	padding: 1em 2em;
 	background: linear-gradient(to top, rgba(0,0,0,.15), rgba(0,0,0,.3));
 	background-color: #00CC00;
-	border-radius: 3px;
 	box-shadow: 1px 1px 3px rgba(0,0,0,.3),inset 0 -1px 2px -1px rgba(0,0,0,.5), inset 0 1px 2px 1px rgba(255,255,255,.3);
 	text-shadow: 0 -1px 0 rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.3);
 	text-decoration: none;
@@ -194,11 +218,13 @@ a:focus {
 	}
 }
 
-#add_new {
+#add_new_note {
 	position: fixed;
-	top: 20px;
-	right: 20px;
-	z-index: 100;
+	top: 5px;
+	z-index: 1000;
+	border-radius: 50%;
+	padding: 10px 20px;
+	font-size: 30px;
 }
 
 .author {
