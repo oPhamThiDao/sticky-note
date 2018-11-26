@@ -27,7 +27,7 @@ export default class Sticky extends Component {
                 color: backgroundColor[Math.floor((Math.random()*backgroundColor.length))],
                 title: "Note" + +maxId,
                 content: "",
-                top: 40 + this.state.data.length*10,
+                top: 40,
                 left: 20 + this.state.data.length*10
               }
 
@@ -71,16 +71,29 @@ export default class Sticky extends Component {
     this.setState({ data })
   }
 
+  handleChangeBackgroundColor(obj, color) {
+    if (obj.color === color) { return; }
+
+    let data = [...this.state.data]
+    data.map(i => {
+      if (i.id === obj.id) { i.color = color }
+      return i
+    })
+
+    this.setState({ data })
+  }
+
   render() {
     let someValidPath = null
     return (
       <div>
-        <a href={someValidPath} className="btn button" id="add_new_note" onClick={this.handleClick.bind(this)}>Add New Note</a>
+        <a href={someValidPath} className="btn button" id="add_new_note" onClick={this.handleClick.bind(this)}>+</a>
         <Draggable
           data={this.state.data}
           handleRemove={this.handleRemove.bind(this)}
           handleChange={this.handleChange.bind(this)}
-          handleDragOver={this.handleDragOver.bind(this)} />
+          handleDragOver={this.handleDragOver.bind(this)}
+          handleChangeBackgroundColor={this.handleChangeBackgroundColor.bind(this)} />
       </div>
     );
   }
